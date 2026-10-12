@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="560" viewBox="0 0 560 560" fill="none">
+  <defs>
+    <radialGradient id="core" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#6ee7ff" stop-opacity="0.85" />
+      <stop offset="45%" stop-color="#a78bfa" stop-opacity="0.45" />
+      <stop offset="100%" stop-color="#a78bfa" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6ee7ff" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#a78bfa" stop-opacity="0.2" />
+    </linearGradient>
+    <linearGradient id="ring2" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#34d399" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#6ee7ff" stop-opacity="0.12" />
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="6" result="b" />
+      <feMerge>
+        <feMergeNode in="b" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <circle cx="280" cy="280" r="152" fill="url(#core)" />
+
+  <g filter="url(#glow)">
+    <circle cx="280" cy="280" r="118" stroke="url(#ring)" stroke-width="1.6" opacity="0.85" />
+    <ellipse cx="280" cy="280" rx="200" ry="74" stroke="url(#ring)" stroke-width="1.4" opacity="0.7" transform="rotate(-24 280 280)" />
+    <ellipse cx="280" cy="280" rx="200" ry="74" stroke="url(#ring2)" stroke-width="1.4" opacity="0.6" transform="rotate(38 280 280)" />
+    <circle cx="280" cy="280" r="176" stroke="url(#ring)" stroke-width="1" opacity="0.4" stroke-dasharray="3 10" />
+  </g>
+
+  <g stroke="url(#ring)" stroke-width="1.2" opacity="0.5">
+    <path d="M280 280 L280 96" />
+    <path d="M280 280 L470 190" />
+    <path d="M280 280 L470 372" />
+    <path d="M280 280 L280 472" />
+    <path d="M280 280 L92 372" />
+    <path d="M280 280 L92 190" />
+  </g>
+
+  <g fill="#6ee7ff" filter="url(#glow)">
+    <circle cx="280" cy="96" r="5" />
+    <circle cx="470" cy="190" r="4" />
+    <circle cx="470" cy="372" r="4" />
+    <circle cx="280" cy="472" r="5" />
+    <circle cx="92" cy="372" r="4" />
+    <circle cx="92" cy="190" r="4" />
+  </g>
+  <g fill="#34d399">
+    <circle cx="280" cy="162" r="3" />
+    <circle cx="404" cy="280" r="3" />
+    <circle cx="156" cy="280" r="3" />
+  </g>
+
+  <g transform="translate(280 280)" stroke="url(#ring)" stroke-width="1.6" fill="rgba(255,255,255,0.04)" filter="url(#glow)">
+    <path d="M0 -46 L40 -23 L40 23 L0 46 L-40 23 L-40 -23 Z" />
+    <path d="M0 -24 L21 -12 L21 12 L0 24 L-21 12 L-21 -12 Z" opacity="0.55" />
+  </g>
+</svg>
