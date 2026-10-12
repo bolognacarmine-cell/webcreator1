@@ -8,12 +8,8 @@
       name="description"
       content="Portfolio di Manuel — Web Developer. Siti vetrina e progetti full stack con focus su UX, identità visiva, SEO e AEO."
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Font ospitati localmente (nessuna connessione a server esterni) -->
+    <link rel="stylesheet" href="./assets/fonts/fonts.css" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -596,23 +592,6 @@
           </div>
 
           <div class="contact-grid">
-            <a class="contact-card" href="mailto:webcreator@libero.it">
-              <span class="contact-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M4 7.5A2.5 2.5 0 0 1 6.5 5h11A2.5 2.5 0 0 1 20 7.5v9A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5v-9z"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                  />
-                  <path d="M5 7l7 6 7-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </span>
-              <div class="contact-body">
-                <div class="contact-label">Email</div>
-                <div class="contact-value">webcreator@libero.it</div>
-              </div>
-            </a>
-
             <a class="contact-card" href="https://wa.me/393887780146" target="_blank" rel="noopener noreferrer">
               <span class="contact-icon whatsapp" aria-hidden="true">
                 <svg viewBox="0 0 24 24" width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -709,20 +688,14 @@
               />
             </svg>
           </a>
-          <a class="icon-btn" href="mailto:webcreator@libero.it" aria-label="Email">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M4 7.5A2.5 2.5 0 0 1 6.5 5h11A2.5 2.5 0 0 1 20 7.5v9A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5v-9z"
-                stroke="currentColor"
-                stroke-width="1.8"
-              />
-              <path d="M5 7l7 6 7-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </a>
         </div>
 
         <div class="footer-bottom">
           <span>© <span id="year"></span> Manuel — Web Developer</span>
+          <nav class="footer-legal" aria-label="Informazioni legali">
+            <a href="./privacy.html#privacy">Privacy Policy (GDPR)</a>
+            <a href="./privacy.html#cookie">Cookie Policy</a>
+          </nav>
         </div>
       </div>
     </footer>
