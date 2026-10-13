@@ -8,6 +8,8 @@
       name="description"
       content="Portfolio di Manuel — Web Developer. Siti vetrina e progetti full stack con focus su UX, identità visiva, SEO e AEO."
     />
+    <meta name="theme-color" content="#05070f" />
+    <link rel="icon" href="./assets/img/favicon.svg" type="image/svg+xml" />
     <!-- Font ospitati localmente (nessuna connessione a server esterni) -->
     <link rel="stylesheet" href="./assets/fonts/fonts.css" />
     <link rel="stylesheet" href="./styles.css" />
@@ -47,11 +49,12 @@
           </p>
           <div class="hero-cta">
             <a class="btn primary" href="#portfolio">Vedi i Miei Progetti</a>
-            <a class="btn ghost" href="#contact">Contattami</a>
+            <a class="btn ghost" href="https://wa.me/393887780146?text=Ciao%20Manuel!%20Ho%20visto%20il%20tuo%20sito%20e%20vorrei%20un%20preventivo%20per%20un%20progetto%20web." target="_blank" rel="noopener noreferrer">Contattami</a>
           </div>
         </div>
         <div class="hero-bg" aria-hidden="true"></div>
         <div class="hero-grid" aria-hidden="true"></div>
+        <canvas class="hero-canvas" id="hero-canvas" aria-hidden="true"></canvas>
         <div class="hero-visual" aria-hidden="true">
           <img
             src="./assets/img/hero-visual.svg"
@@ -328,6 +331,33 @@
                   <span class="tag" role="listitem">B2B</span>
                 </div>
               </article>
+
+              <article class="project">
+                <figure class="project-media">
+                  <img
+                    src="./assets/projects/farcomarredi.jpg"
+                    alt="Arredi su misura per barber shop, uffici e negozi: anteprima del sito Farcom Design"
+                    width="1280"
+                    height="720"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </figure>
+                <div class="project-meta">
+                  <span class="project-kicker">Full stack</span>
+                  <a class="project-link" href="https://www.farcomarredi.it" target="_blank" rel="noopener noreferrer">Visita Sito</a>
+                </div>
+                <h4 class="project-title">Farcom Design</h4>
+                <p class="project-desc">
+                  Sito per showroom di arredamento su misura e progettazione interni, con realizzazioni, richiesta preventivo e sopralluogo.
+                </p>
+                <div class="tag-row" role="list">
+                  <span class="tag" role="listitem">React</span>
+                  <span class="tag" role="listitem">PWA</span>
+                  <span class="tag" role="listitem">Responsive</span>
+                  <span class="tag" role="listitem">SEO</span>
+                </div>
+              </article>
             </div>
           </div>
 
@@ -352,7 +382,7 @@
 
             <div class="project-grid">
               <article class="project">
-                <figure class="project-media contain">
+                <figure class="project-media">
                   <img
                     src="./assets/projects/new-drink-store.jpg"
                     alt="Anteprima del sito New Drink Store"
@@ -592,7 +622,7 @@
           </div>
 
           <div class="contact-grid">
-            <a class="contact-card" href="https://wa.me/393887780146" target="_blank" rel="noopener noreferrer">
+            <a class="contact-card" href="https://wa.me/393887780146?text=Ciao%20Manuel!%20Ho%20visto%20il%20tuo%20sito%20e%20vorrei%20un%20preventivo%20per%20un%20progetto%20web." target="_blank" rel="noopener noreferrer">
               <span class="contact-icon whatsapp" aria-hidden="true">
                 <svg viewBox="0 0 24 24" width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -674,7 +704,7 @@
               <path d="M17.7 6.3h.01" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" />
             </svg>
           </a>
-          <a class="icon-btn" href="https://wa.me/393887780146" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+          <a class="icon-btn" href="https://wa.me/393887780146?text=Ciao%20Manuel!%20Ho%20visto%20il%20tuo%20sito%20e%20vorrei%20un%20preventivo%20per%20un%20progetto%20web." target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M20 11.8a7.7 7.7 0 0 1-11.8 6.5L4 19l.8-4.1A7.7 7.7 0 1 1 20 11.8z"
@@ -703,5 +733,6 @@
     <script src="./assets/vendor/gsap.min.js"></script>
     <script src="./assets/vendor/ScrollTrigger.min.js"></script>
     <script src="./script.js"></script>
+    <script type="module" src="./src/hero-scene.js"></script>
   </body>
 </html>

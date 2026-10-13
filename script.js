@@ -89,17 +89,41 @@
     })
   }
 
-  /* ---- Portrait: light parallax on scroll ---- */
-  const portrait = document.querySelector('.media-card img')
+  /* ---- Portrait: slow 2D levitation + Ken Burns zoom + scroll parallax ----
+     No 3D/perspective here on purpose: a 3D-composited element inside an
+     `overflow: hidden` + `border-radius` parent triggers a Chromium compositor
+     bug (black seams). 2D transforms are immune to it. */
+  const portraitCard = document.querySelector('.media-card')
+  const portrait = portraitCard ? portraitCard.querySelector('img') : null
+  if (portraitCard) {
+    gsapSafe.fromTo(
+      portraitCard,
+      { y: -6 },
+      { y: 6, duration: 7, repeat: -1, yoyo: true, ease: 'sine.inOut', force3D: false }
+    )
+  }
   if (portrait) {
+    gsapSafe.fromTo(
+      portrait,
+      { scale: 1.02 },
+      {
+        scale: 1.08,
+        duration: 11,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+        force3D: false,
+      }
+    )
     gsapSafe.fromTo(
       portrait,
       { yPercent: -4 },
       {
         yPercent: 4,
         ease: 'none',
+        force3D: false,
         scrollTrigger: {
-          trigger: '.media-card',
+          trigger: portraitCard,
           start: 'top bottom',
           end: 'bottom top',
           scrub: 0.8,

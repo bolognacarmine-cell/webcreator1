@@ -150,7 +150,7 @@ button:focus-visible {
 .brand-mark {
   width: 44px;
   height: 44px;
-  border-radius: 14px;
+  border-radius: 50%;
   display: grid;
   place-items: center;
   font-weight: 900;
@@ -281,6 +281,58 @@ button:focus-visible {
   width: 100%;
   height: auto;
   filter: drop-shadow(0 0 40px rgba(110, 231, 255, 0.25));
+}
+
+/* ---- Hero WebGL canvas (progressive enhancement) ----
+   Hidden by default and only surfaced once the module reports WebGL is up
+   (html.has-webgl). When active it replaces the static SVG hero visual.
+   Decorative: never grabs pointer events or text selection. */
+.hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  display: none;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  mask-image: radial-gradient(closest-side at 50% 48%, #000 58%, transparent 94%);
+  -webkit-mask-image: radial-gradient(closest-side at 50% 48%, #000 58%, transparent 94%);
+}
+
+html.has-webgl .hero-canvas {
+  display: block;
+  animation: heroCanvasIn 900ms ease both;
+}
+
+html.has-webgl .hero-visual {
+  display: none;
+}
+
+/* Drag-to-orbit affordance (fine pointers only; links keep the pointer). */
+@media (pointer: fine) {
+  html.has-webgl .hero {
+    cursor: grab;
+  }
+
+  html.has-webgl .hero.is-orbiting {
+    cursor: grabbing;
+  }
+
+  html.has-webgl .hero a,
+  html.has-webgl .hero button {
+    cursor: pointer;
+  }
+}
+
+@keyframes heroCanvasIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .kicker {
