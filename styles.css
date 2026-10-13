@@ -1385,3 +1385,13 @@ html.has-webgl .hero-visual {
     display: none;
   }
 }
+
+@media (max-width: 600px) {
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-text {
+    min-width: 0;
+  }
+}
