@@ -487,15 +487,35 @@ html.has-webgl .hero-visual {
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.14);
   background: rgba(255, 255, 255, 0.03);
-  box-shadow: 0 22px 70px var(--shadow);
+  box-shadow: 0 60px 120px rgba(0, 0, 0, 0.85), 0 0 60px rgba(110, 231, 255, 0.25);
+  aspect-ratio: 4 / 5;
+  transform-style: preserve-3d;
 }
 
+
 .media-card::after {
-  content: "";
+  content: none;
+}
+
+.flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.flip-face {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 55%, rgba(110, 231, 255, 0.12));
-  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  backface-visibility: hidden;
+  box-shadow: 0 60px 120px rgba(0, 0, 0, 0.85), 0 0 60px rgba(110, 231, 255, 0.25);
+}
+
+.flip-back {
+  transform: rotateY(180deg);
 }
 
 .feature-grid {
@@ -792,9 +812,13 @@ html.has-webgl .hero-visual {
   opacity: 1;
 }
 
-.project-media img {
+.project-media .flip-inner {
   width: 100%;
   aspect-ratio: 16 / 9;
+  transform-style: preserve-3d;
+}
+
+.project-media .flip-face {
   object-fit: cover;
   will-change: transform;
 }
@@ -803,12 +827,12 @@ html.has-webgl .hero-visual {
   transform: scale(1.05);
 }
 
-.project-media.contain img {
+.project-media.contain .flip-face {
   object-fit: contain;
   padding: 18px;
 }
 
-.project-media.focus-bottom img {
+.project-media.focus-bottom .flip-face {
   object-position: 50% 80%;
 }
 
@@ -953,15 +977,22 @@ html.has-webgl .hero-visual {
 .eco-visual {
   margin: 0;
   border-radius: var(--radius);
-  overflow: hidden;
+  overflow: visible;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(255, 255, 255, 0.03);
   box-shadow: 0 22px 70px rgba(0, 0, 0, 0.4);
+  transform-style: preserve-3d;
 }
 
-.eco-visual img {
+.eco-visual .flip-inner {
   width: 100%;
-  height: auto;
+  aspect-ratio: 640 / 520;
+  transform-style: preserve-3d;
+}
+
+.eco-visual .flip-face {
+  object-fit: cover;
+  will-change: transform;
 }
 
 /* ---- Partners ---- */
@@ -1394,4 +1425,245 @@ html.has-webgl .hero-visual {
   .feature-text {
     min-width: 0;
   }
+}
+/* ---- High-tech global effects ---- */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.03) 0,
+    rgba(255, 255, 255, 0.03) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode: overlay;
+  animation: scan-move 6s linear infinite;
+  opacity: 0.35;
+}
+
+@keyframes scan-move {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(12px); }
+}
+
+@keyframes neon-pulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(110, 231, 255, 0.45), 0 0 30px rgba(110, 231, 255, 0.12); }
+  50% { box-shadow: 0 0 22px rgba(110, 231, 255, 0.85), 0 0 60px rgba(167, 139, 250, 0.35); }
+}
+
+.btn.primary {
+  animation: neon-pulse 2.6s ease-in-out infinite;
+}
+
+.card, .feature, .project, .contact-card {
+  transition: transform 240ms ease, box-shadow 240ms ease, border-color 240ms ease;
+}
+
+.card:hover, .feature:hover, .project:hover, .contact-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 50px rgba(110, 231, 255, 0.18);
+  border-color: rgba(110, 231, 255, 0.35);
+}
+
+@keyframes glitch {
+  0%, 92%, 100% { transform: translate(0); opacity: 1; }
+  93% { transform: translate(-3px, 1px); opacity: 0.85; clip-path: inset(0 0 40% 0); }
+  95% { transform: translate(3px, -1px); opacity: 0.9; clip-path: inset(60% 0 0 0); }
+  97% { transform: translate(-2px, 2px); opacity: 0.8; clip-path: inset(30% 0 30% 0); }
+}
+
+.hero-title {
+  position: relative;
+  display: inline-block;
+  animation: glitch 5s ease-in-out infinite;
+}
+
+
+.brand-mark {
+  animation: neon-pulse 2.2s ease-in-out infinite;
+}
+
+/* ---- Extra wow effects ---- */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    linear-gradient(90deg, rgba(110, 231, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(167, 139, 250, 0.07) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  animation: grid-drift 18s linear infinite;
+  opacity: 0.45;
+}
+
+@keyframes grid-drift {
+  0% { background-position: 0 0; }
+  100% { background-position: 60px 60px; }
+}
+
+.hero-title {
+  text-shadow:
+    0 0 10px rgba(110, 231, 255, 0.7),
+    0 0 28px rgba(167, 139, 250, 0.5),
+    0 0 60px rgba(110, 231, 255, 0.25);
+  animation: glitch 5s ease-in-out infinite, hueShift 12s linear infinite;
+}
+
+@keyframes hueShift {
+  0% { filter: hue-rotate(0deg) saturate(1.1); }
+  100% { filter: hue-rotate(360deg) saturate(1.1); }
+}
+
+
+.h2 {
+  position: relative;
+  display: inline-block;
+}
+
+.h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary), var(--primary2));
+  box-shadow: 0 0 10px rgba(110, 231, 255, 0.7);
+  animation: underline-grow 2.8s ease-in-out infinite;
+}
+
+@keyframes underline-grow {
+  0%, 100% { width: 0; opacity: 0.4; }
+  50% { width: 100%; opacity: 1; }
+}
+
+.skill-chip, .chip {
+  animation: chip-float 3.6s ease-in-out infinite;
+}
+
+@keyframes chip-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.card:hover, .project:hover {
+  animation: pulse-border 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse-border {
+  0%, 100% { border-color: rgba(110, 231, 255, 0.35); }
+  50% { border-color: rgba(167, 139, 250, 0.6); }
+}
+
+/* ---- Wow: custom cursor ---- */
+@media (pointer: fine) {
+  body { cursor: auto; }
+  a, button, .btn, .project, .feature, .card, .chip { cursor: pointer; }
+  .cursor-dot, .cursor-ring {
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    will-change: transform;
+    mix-blend-mode: screen;
+  }
+  .cursor-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: #6ee7ff;
+    box-shadow: 0 0 14px #6ee7ff, 0 0 28px #a78bfa;
+    opacity: 0.95;
+  }
+  .cursor-ring {
+    width: 46px; height: 46px;
+    margin-left: -19px; margin-top: -19px;
+    border: 2px solid rgba(110, 231, 255, 0.9);
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(110, 231, 255, 0.55), inset 0 0 12px rgba(167, 139, 250, 0.25);
+    transition: width 200ms ease, height 200ms ease, margin 200ms ease, border-color 200ms ease;
+    mix-blend-mode: normal;
+  }
+  .cursor-ring.is-hover {
+    width: 70px; height: 70px;
+    margin-left: -31px; margin-top: -31px;
+    border-color: rgba(167, 139, 250, 0.8);
+  }
+}
+
+/* ---- Immersive pointer-reactive background ---- */
+.immersive-layer {
+  position: fixed;
+  inset: -10%;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(500px 500px at 30% 40%, rgba(110, 231, 255, 0.16), transparent 65%),
+    radial-gradient(600px 600px at 75% 60%, rgba(167, 139, 250, 0.14), transparent 60%);
+  filter: blur(10px);
+  will-change: transform;
+  transition: opacity 300ms ease;
+}
+
+/* ---- Wow: sweeping scan beam ---- */
+.scan-beam {
+  position: fixed;
+  left: 0; right: 0;
+  height: 2px;
+  top: 0;
+  pointer-events: none;
+  z-index: 998;
+  background: linear-gradient(90deg, transparent, rgba(110, 231, 255, 0.95), rgba(167, 139, 250, 0.8), transparent);
+  box-shadow: 0 0 18px rgba(110, 231, 255, 0.55), 0 0 40px rgba(167, 139, 250, 0.35);
+  animation: scan-sweep 7s ease-in-out infinite;
+  opacity: 0.6;
+}
+
+@keyframes scan-sweep {
+  0% { transform: translateY(-10vh); }
+  50% { transform: translateY(110vh); }
+  100% { transform: translateY(110vh); }
+}
+
+/* ---- Wow: cursor trail ---- */
+.trail-dot {
+  position: fixed;
+  width: 8px; height: 8px;
+  margin-left: -4px; margin-top: -4px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  mix-blend-mode: screen;
+  box-shadow: 0 0 14px rgba(110, 231, 255, 0.8), 0 0 28px rgba(167, 139, 250, 0.45);
+  transition: opacity 400ms ease;
+}
+
+/* ---- Wow: shimmering gradient titles ---- */
+.h2 {
+  background: linear-gradient(90deg, rgba(255,255,255,0.95), var(--primary), var(--primary2), rgba(255,255,255,0.95));
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: text-shimmer 5s linear infinite;
+}
+
+@keyframes text-shimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 250% 50%; }
+}
+
+/* ---- Global 3D stage ---- */
+html {
+  perspective: 1400px;
+}
+
+body {
+  transform-style: preserve-3d;
 }

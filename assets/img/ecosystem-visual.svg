@@ -25,8 +25,12 @@
     </filter>
   </defs>
 
-  <circle cx="320" cy="260" r="205" stroke="url(#line)" stroke-width="1" opacity="0.35" stroke-dasharray="4 12" />
+  <circle cx="320" cy="260" r="205" stroke="url(#line)" stroke-width="1" opacity="0.35" stroke-dasharray="4 12">
+    <animateTransform attributeName="transform" type="rotate" from="0 320 260" to="360 320 260" dur="8s" repeatCount="indefinite" />
+  </circle>
   <circle cx="320" cy="260" r="150" fill="url(#aura)" />
+  <g id="orbit">
+    <animateTransform attributeName="transform" type="rotate" from="0 320 260" to="360 320 260" dur="12s" repeatCount="indefinite" />
 
   <g stroke="url(#line)" stroke-width="2" opacity="0.75" filter="url(#eglow)">
     <line x1="320" y1="142" x2="320" y2="200" />
@@ -35,8 +39,11 @@
     <line x1="138" y1="260" x2="208" y2="260" />
   </g>
 
+  </g>
+
   <!-- hub: il sito -->
   <g filter="url(#eglow)">
+    <animateTransform attributeName="transform" type="rotate" from="0 320 260" to="360 320 260" dur="16s" repeatCount="indefinite" />
     <rect x="250" y="200" width="140" height="120" rx="18" fill="url(#hub)" stroke="rgba(255,255,255,0.22)" />
     <line x1="250" y1="232" x2="390" y2="232" stroke="rgba(255,255,255,0.18)" />
     <circle cx="264" cy="216" r="3.4" fill="#fbbf24" />
@@ -54,16 +61,19 @@
   <g filter="url(#eglow)">
     <circle cx="320" cy="96" r="46" fill="url(#node)" stroke="rgba(110,231,255,0.4)" />
     <g stroke="#6ee7ff" stroke-width="1.8" fill="none">
+      <animateTransform attributeName="transform" type="rotate" from="0 320 96" to="360 320 96" dur="6s" repeatCount="indefinite" />
       <line x1="308" y1="104" x2="332" y2="90" />
       <line x1="308" y1="104" x2="332" y2="118" />
     </g>
     <g fill="#6ee7ff">
+      <animateTransform attributeName="transform" type="rotate" from="0 320 96" to="360 320 96" dur="6s" repeatCount="indefinite" />
       <circle cx="306" cy="104" r="6" />
       <circle cx="334" cy="88" r="5" />
       <circle cx="334" cy="120" r="5" />
     </g>
   </g>
   <text x="320" y="40" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="rgba(255,255,255,0.82)">
+    <animateTransform attributeName="transform" type="rotate" from="0 320 40" to="-360 320 40" dur="12s" repeatCount="indefinite" />
     Social
   </text>
 
@@ -71,11 +81,13 @@
   <g filter="url(#eglow)">
     <circle cx="548" cy="260" r="46" fill="url(#node)" stroke="rgba(52,211,153,0.4)" />
     <g stroke="#34d399" stroke-width="2" fill="none">
+      <animateTransform attributeName="transform" type="rotate" from="0 548 260" to="360 548 260" dur="7s" repeatCount="indefinite" />
       <circle cx="544" cy="256" r="14" />
       <line x1="554" y1="266" x2="566" y2="278" stroke-linecap="round" />
     </g>
   </g>
   <text x="548" y="204" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="rgba(255,255,255,0.82)">
+    <animateTransform attributeName="transform" type="rotate" from="0 548 204" to="-360 548 204" dur="12s" repeatCount="indefinite" />
     SEO
   </text>
 
@@ -83,6 +95,7 @@
   <g filter="url(#eglow)">
     <circle cx="320" cy="432" r="46" fill="url(#node)" stroke="rgba(167,139,250,0.4)" />
     <g stroke="#a78bfa" stroke-width="2" fill="none">
+      <animateTransform attributeName="transform" type="rotate" from="0 320 432" to="360 320 432" dur="5s" repeatCount="indefinite" />
       <circle cx="320" cy="432" r="15" />
       <circle cx="320" cy="432" r="5" fill="#a78bfa" stroke="none" />
       <line x1="320" y1="411" x2="320" y2="405" stroke-linecap="round" />
@@ -96,6 +109,7 @@
     </g>
   </g>
   <text x="320" y="500" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="rgba(255,255,255,0.82)">
+    <animateTransform attributeName="transform" type="rotate" from="0 320 500" to="-360 320 500" dur="12s" repeatCount="indefinite" />
     Automazioni
   </text>
 
@@ -103,11 +117,13 @@
   <g filter="url(#eglow)">
     <circle cx="92" cy="260" r="46" fill="url(#node)" stroke="rgba(251,191,36,0.4)" />
     <g stroke="#fbbf24" stroke-width="2" fill="none">
+      <animateTransform attributeName="transform" type="rotate" from="0 92 260" to="360 92 260" dur="8s" repeatCount="indefinite" />
       <rect x="72" y="248" width="40" height="26" rx="5" />
       <path d="M73 250l19 15 19-15" stroke-linecap="round" stroke-linejoin="round" />
     </g>
   </g>
   <text x="92" y="204" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="rgba(255,255,255,0.82)">
+    <animateTransform attributeName="transform" type="rotate" from="0 92 204" to="-360 92 204" dur="12s" repeatCount="indefinite" />
     Contatti
   </text>
 </svg>

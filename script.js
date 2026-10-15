@@ -94,7 +94,7 @@
      `overflow: hidden` + `border-radius` parent triggers a Chromium compositor
      bug (black seams). 2D transforms are immune to it. */
   const portraitCard = document.querySelector('.media-card')
-  const portrait = portraitCard ? portraitCard.querySelector('img') : null
+  const flipInner = document.querySelector('.flip-inner')
   if (portraitCard) {
     gsapSafe.fromTo(
       portraitCard,
@@ -102,21 +102,30 @@
       { y: 6, duration: 7, repeat: -1, yoyo: true, ease: 'sine.inOut', force3D: false }
     )
   }
-  if (portrait) {
+  if (flipInner) {
     gsapSafe.fromTo(
-      portrait,
-      { scale: 1.02 },
+      flipInner,
+      { scale: 0.78 },
       {
-        scale: 1.08,
+        scale: 0.86,
         duration: 11,
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut',
-        force3D: false,
+        force3D: true,
       }
     )
+    gsapSafe.set(flipInner, { rotationX: -18, transformOrigin: '50% 50%' })
+    gsapSafe.to(flipInner, {
+      rotationY: -360,
+      duration: 22,
+      repeat: -1,
+      ease: 'none',
+      transformOrigin: '50% 50%',
+      force3D: true,
+    })
     gsapSafe.fromTo(
-      portrait,
+      flipInner,
       { yPercent: -4 },
       {
         yPercent: 4,
@@ -221,22 +230,31 @@
     )
   })
 
-  /* ---- Project image parallax ---- */
-  document.querySelectorAll('.project-media img').forEach((img) => {
+  /* ---- Project image parallax + continuous 3D flip ---- */
+  document.querySelectorAll('.project-media .flip-inner').forEach((inner) => {
     gsapSafe.fromTo(
-      img,
-      { yPercent: -6, scale: 1.06 },
+      inner,
+      { yPercent: -6, scale: 1.04 },
       {
         yPercent: 6,
         ease: 'none',
         scrollTrigger: {
-          trigger: img.closest('.project'),
+          trigger: inner.closest('.project'),
           start: 'top bottom',
           end: 'bottom top',
           scrub: 0.8,
         },
       }
     )
+    gsapSafe.set(inner, { rotationX: -10, transformOrigin: '50% 50%' })
+    gsapSafe.to(inner, {
+      rotationY: 360,
+      duration: 26,
+      repeat: -1,
+      ease: 'none',
+      transformOrigin: '50% 50%',
+      force3D: true,
+    })
   })
 
   /* ---- Micro-interactions: magnetic buttons ---- */
@@ -283,6 +301,279 @@
           rotateX: -py * maxTilt,
           transformPerspective: 900,
           duration: 0.4,
+          ease: 'power2.out',
+        })
+      })
+      card.addEventListener('pointerleave', () => {
+        gsapSafe.to(card, {
+          rotateY: 0,
+          rotateX: 0,
+          duration: 0.6,
+          ease: 'elastic.out(1,0.55)',
+        })
+      })
+    })
+  }
+
+  /* ---- Wow: custom glowing cursor ---- */
+  if (!isCoarsePointer) {
+    const dot = document.createElement('div')
+    const ring = document.createElement('div')
+    dot.className = 'cursor-dot'
+    ring.className = 'cursor-ring'
+    document.body.appendChild(dot)
+    document.body.appendChild(ring)
+
+    let mx = 0, my = 0
+    let dx = 0, dy = 0
+    let rx = 0, ry = 0
+    window.addEventListener('pointermove', (e) => {
+      mx = e.clientX
+      my = e.clientY
+      if (!dot._init) {
+        dx = mx; dy = my; rx = mx; ry = my; dot._init = true
+      }
+    })
+
+    const cursorTick = () => {
+      dx += (mx - dx) * 0.35
+      dy += (my - dy) * 0.35
+      rx += (mx - rx) * 0.12
+      ry += (my - ry) * 0.12
+      dot.style.transform = `translate(${dx - 4}px, ${dy - 4}px)`
+      ring.style.transform = `translate(${rx}px, ${ry}px)`
+      requestAnimationFrame(cursorTick)
+    }
+    cursorTick()
+
+    const hoverSel = 'a, button, .btn, .project, .feature, .card, .chip, .media-card'
+    document.querySelectorAll(hoverSel).forEach((el) => {
+      el.addEventListener('pointerenter', () => ring.classList.add('is-hover'))
+      el.addEventListener('pointerleave', () => ring.classList.remove('is-hover'))
+    })
+  }
+
+  /* ---- Wow: GSAP scroll parallax across sections ---- */
+  document.querySelectorAll('.section-head').forEach((head) => {
+    gsapSafe.fromTo(
+      head,
+      { yPercent: -12 },
+      {
+        yPercent: 12,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: head,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 0.6,
+        },
+      }
+    )
+  })
+
+  document.querySelectorAll('.project-grid, .feature-grid, .skills-grid').forEach((grid) => {
+    gsapSafe.fromTo(
+      grid,
+      { yPercent: 6 },
+      {
+        yPercent: -6,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: grid,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 0.6,
+        },
+      }
+    )
+  })
+
+  gsapSafe.fromTo(
+    '.hero-visual',
+    { yPercent: -8 },
+    {
+      yPercent: 12,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 0.7,
+      },
+    }
+  )
+
+  /* ---- Wow: 3D flip for ecosystem visual ---- */
+  const ecoFlip = document.querySelector('.eco-visual .flip-inner')
+  if (ecoFlip) {
+    gsapSafe.set(ecoFlip, { rotationX: -12, transformOrigin: '50% 50%', opacity: 0, scale: 0.7, y: 60 })
+    const ecoIntro = gsapSafe.timeline({ defaults: { ease: 'power3.out' } })
+    ecoIntro.to(ecoFlip, { opacity: 1, scale: 1, y: 0, duration: 1.4 }, 0.2)
+    ecoIntro.to(ecoFlip, {
+      rotationY: -360,
+      duration: 24,
+      repeat: -1,
+      ease: 'none',
+      transformOrigin: '50% 50%',
+      force3D: true,
+    }, 0.8)
+  }
+
+  /* ---- Wow: immersive pointer-reactive background ---- */
+  const immersiveLayer = document.createElement('div')
+  immersiveLayer.className = 'immersive-layer'
+  document.body.prepend(immersiveLayer)
+  let ix = 0, iy = 0, cx = 0, cy = 0
+  window.addEventListener('pointermove', (e) => {
+    ix = (e.clientX / window.innerWidth - 0.5) * 60
+    iy = (e.clientY / window.innerHeight - 0.5) * 60
+  })
+  const layerTick = () => {
+    cx += (ix - cx) * 0.06
+    cy += (iy - cy) * 0.06
+    immersiveLayer.style.transform = `translate(${cx}px, ${cy}px)`
+    requestAnimationFrame(layerTick)
+  }
+  layerTick()
+
+  /* ---- Wow: sweeping scan beam ---- */
+  const scanBeam = document.createElement('div')
+  scanBeam.className = 'scan-beam'
+  document.body.appendChild(scanBeam)
+
+  /* ---- Wow: cursor trail ---- */
+  const trailCount = 26
+  const trailDots = []
+  for (let i = 0; i < trailCount; i++) {
+    const d = document.createElement('div')
+    d.className = 'trail-dot'
+    d.style.opacity = String(1 - i / trailCount)
+    d.style.background = i % 2 === 0 ? '#6ee7ff' : '#a78bfa'
+    document.body.appendChild(d)
+    trailDots.push({ el: d, x: 0, y: 0 })
+  }
+  let trailX = 0, trailY = 0
+  window.addEventListener('pointermove', (e) => { trailX = e.clientX; trailY = e.clientY })
+  const trailTick = () => {
+    let x = trailX, y = trailY
+    trailDots.forEach((t, i) => {
+      t.x += (x - t.x) * 0.35
+      t.y += (y - t.y) * 0.35
+      t.el.style.transform = `translate(${t.x}px, ${t.y}px)`
+      x = t.x
+      y = t.y
+    })
+    requestAnimationFrame(trailTick)
+  }
+  trailTick()
+
+  /* ---- Wow: 3D section enter/exit depth ---- */
+  document.querySelectorAll('.section').forEach((sec) => {
+    gsapSafe.fromTo(
+      sec,
+      { rotationX: 6, scale: 0.96, transformPerspective: 1200, transformOrigin: '50% 100%' },
+      {
+        rotationX: 0,
+        scale: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: sec,
+          start: 'top 90%',
+          end: 'top 30%',
+          scrub: 0.6,
+        },
+      }
+    )
+    gsapSafe.to(sec, {
+      rotationX: -4,
+      scale: 0.97,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: sec,
+        start: 'bottom 70%',
+        end: 'bottom 10%',
+        scrub: 0.6,
+      },
+    })
+  })
+
+  /* ---- Wow: cinematic scroll transitions ---- */
+  gsapSafe.to('.hero', {
+    scale: 1.06,
+    opacity: 0.75,
+    filter: 'blur(3px)',
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.hero',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: 0.8,
+    },
+  })
+
+  gsapSafe.to('.scroll-progress', {
+    backgroundColor: 'rgba(167, 139, 250, 1)',
+    ease: 'none',
+    scrollTrigger: {
+      trigger: document.body,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: true,
+    },
+  })
+
+  /* ---- Wow: global mouse parallax for everything ---- */
+  const parallaxEls = gsapSafe.utils.toArray('.hero, .section, .media-card, .eco-visual, .project')
+  const parallaxQuick = parallaxEls.map((el) => {
+    const depth = el.classList.contains('media-card') ? 20
+      : el.classList.contains('project') ? 10
+      : el.classList.contains('hero') ? 6
+      : 8
+    return {
+      el,
+      depth,
+      xTo: gsapSafe.quickTo(el, 'x', { duration: 0.9, ease: 'power3.out' }),
+      yTo: gsapSafe.quickTo(el, 'y', { duration: 0.9, ease: 'power3.out' }),
+    }
+  })
+  window.addEventListener('pointermove', (e) => {
+    const mx = e.clientX / window.innerWidth - 0.5
+    const my = e.clientY / window.innerHeight - 0.5
+    parallaxQuick.forEach((p) => {
+      p.xTo(mx * p.depth)
+      p.yTo(my * p.depth)
+    })
+  })
+
+  /* ---- Wow: typewriter on kicker ---- */
+  const kicker = document.querySelector('.kicker')
+  if (kicker) {
+    const fullText = kicker.textContent
+    kicker.textContent = ''
+    let i = 0
+    const type = () => {
+      if (i <= fullText.length) {
+        kicker.textContent = fullText.slice(0, i) + (i < fullText.length ? '▋' : '')
+        i++
+        setTimeout(type, 45 + Math.random() * 40)
+      }
+    }
+    setTimeout(type, 600)
+  }
+
+  /* ---- Wow: 3D tilt on cards & features too ---- */
+  if (!isCoarsePointer) {
+    document.querySelectorAll('.card, .feature').forEach((card) => {
+      const maxTilt = 4
+      card.addEventListener('pointermove', (e) => {
+        const r = card.getBoundingClientRect()
+        const px = (e.clientX - r.left) / r.width - 0.5
+        const py = (e.clientY - r.top) / r.height - 0.5
+        gsapSafe.to(card, {
+          rotateY: px * maxTilt,
+          rotateX: -py * maxTilt,
+          transformPerspective: 800,
+          duration: 0.35,
           ease: 'power2.out',
         })
       })
