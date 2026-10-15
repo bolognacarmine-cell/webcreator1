@@ -8,6 +8,7 @@
   const hasGsap = typeof window.gsap !== 'undefined'
   const hasST = typeof window.ScrollTrigger !== 'undefined'
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const isMobile = window.matchMedia('(max-width: 820px)').matches || window.matchMedia('(pointer: coarse)').matches
 
   if (!hasGsap || !hasST || reduceMotion) {
     document.querySelectorAll('[data-reveal]').forEach((el) => {
@@ -469,8 +470,9 @@
     trailTick()
   }
 
-  /* ---- Wow: 3D section enter/exit depth ---- */
-  document.querySelectorAll('.section').forEach((sec) => {
+  /* ---- Wow: 3D section enter/exit depth (desktop only) ---- */
+  if (!isMobile) {
+    document.querySelectorAll('.section').forEach((sec) => {
     gsapSafe.fromTo(
       sec,
       { rotationX: 6, scale: 0.96, transformPerspective: 1200, transformOrigin: '50% 100%' },
@@ -497,10 +499,12 @@
         scrub: 0.6,
       },
     })
-  })
+    })
+  }
 
-  /* ---- Wow: cinematic scroll transitions ---- */
-  gsapSafe.to('.hero', {
+  /* ---- Wow: cinematic scroll transitions (desktop only) ---- */
+  if (!isMobile) {
+    gsapSafe.to('.hero', {
     scale: 1.06,
     opacity: 0.75,
     filter: 'blur(3px)',
@@ -512,6 +516,7 @@
       scrub: 0.8,
     },
   })
+  }
 
   gsapSafe.to('.scroll-progress', {
     backgroundColor: 'rgba(167, 139, 250, 1)',
