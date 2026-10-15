@@ -441,31 +441,33 @@
   scanBeam.className = 'scan-beam'
   document.body.appendChild(scanBeam)
 
-  /* ---- Wow: cursor trail ---- */
-  const trailCount = 26
-  const trailDots = []
-  for (let i = 0; i < trailCount; i++) {
-    const d = document.createElement('div')
-    d.className = 'trail-dot'
-    d.style.opacity = String(1 - i / trailCount)
-    d.style.background = i % 2 === 0 ? '#6ee7ff' : '#a78bfa'
-    document.body.appendChild(d)
-    trailDots.push({ el: d, x: 0, y: 0 })
+  /* ---- Wow: cursor trail (desktop only) ---- */
+  if (!isCoarsePointer) {
+    const trailCount = 26
+    const trailDots = []
+    for (let i = 0; i < trailCount; i++) {
+      const d = document.createElement('div')
+      d.className = 'trail-dot'
+      d.style.opacity = String(1 - i / trailCount)
+      d.style.background = i % 2 === 0 ? '#6ee7ff' : '#a78bfa'
+      document.body.appendChild(d)
+      trailDots.push({ el: d, x: 0, y: 0 })
+    }
+    let trailX = 0, trailY = 0
+    window.addEventListener('pointermove', (e) => { trailX = e.clientX; trailY = e.clientY })
+    const trailTick = () => {
+      let x = trailX, y = trailY
+      trailDots.forEach((t, i) => {
+        t.x += (x - t.x) * 0.35
+        t.y += (y - t.y) * 0.35
+        t.el.style.transform = `translate(${t.x}px, ${t.y}px)`
+        x = t.x
+        y = t.y
+      })
+      requestAnimationFrame(trailTick)
+    }
+    trailTick()
   }
-  let trailX = 0, trailY = 0
-  window.addEventListener('pointermove', (e) => { trailX = e.clientX; trailY = e.clientY })
-  const trailTick = () => {
-    let x = trailX, y = trailY
-    trailDots.forEach((t, i) => {
-      t.x += (x - t.x) * 0.35
-      t.y += (y - t.y) * 0.35
-      t.el.style.transform = `translate(${t.x}px, ${t.y}px)`
-      x = t.x
-      y = t.y
-    })
-    requestAnimationFrame(trailTick)
-  }
-  trailTick()
 
   /* ---- Wow: 3D section enter/exit depth ---- */
   document.querySelectorAll('.section').forEach((sec) => {
@@ -522,28 +524,30 @@
     },
   })
 
-  /* ---- Wow: global mouse parallax for everything ---- */
-  const parallaxEls = gsapSafe.utils.toArray('.hero, .section, .media-card, .eco-visual, .project')
-  const parallaxQuick = parallaxEls.map((el) => {
-    const depth = el.classList.contains('media-card') ? 20
-      : el.classList.contains('project') ? 10
-      : el.classList.contains('hero') ? 6
-      : 8
-    return {
-      el,
-      depth,
-      xTo: gsapSafe.quickTo(el, 'x', { duration: 0.9, ease: 'power3.out' }),
-      yTo: gsapSafe.quickTo(el, 'y', { duration: 0.9, ease: 'power3.out' }),
-    }
-  })
-  window.addEventListener('pointermove', (e) => {
-    const mx = e.clientX / window.innerWidth - 0.5
-    const my = e.clientY / window.innerHeight - 0.5
-    parallaxQuick.forEach((p) => {
-      p.xTo(mx * p.depth)
-      p.yTo(my * p.depth)
+  /* ---- Wow: global mouse parallax for everything (desktop only) ---- */
+  if (!isCoarsePointer) {
+    const parallaxEls = gsapSafe.utils.toArray('.hero, .section, .media-card, .eco-visual, .project')
+    const parallaxQuick = parallaxEls.map((el) => {
+      const depth = el.classList.contains('media-card') ? 20
+        : el.classList.contains('project') ? 10
+        : el.classList.contains('hero') ? 6
+        : 8
+      return {
+        el,
+        depth,
+        xTo: gsapSafe.quickTo(el, 'x', { duration: 0.9, ease: 'power3.out' }),
+        yTo: gsapSafe.quickTo(el, 'y', { duration: 0.9, ease: 'power3.out' }),
+      }
     })
-  })
+    window.addEventListener('pointermove', (e) => {
+      const mx = e.clientX / window.innerWidth - 0.5
+      const my = e.clientY / window.innerHeight - 0.5
+      parallaxQuick.forEach((p) => {
+        p.xTo(mx * p.depth)
+        p.yTo(my * p.depth)
+      })
+    })
+  }
 
   /* ---- Wow: typewriter on kicker ---- */
   const kicker = document.querySelector('.kicker')

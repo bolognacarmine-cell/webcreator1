@@ -1667,3 +1667,12 @@ html {
 body {
   transform-style: preserve-3d;
 }
+
+/* ---- Mobile/performance optimizations ---- */
+@media (max-width: 760px), (pointer: coarse) {
+  .immersive-layer, .scan-beam, .trail-dot { display: none; }
+  .media-card, .eco-visual { transform: none !important; perspective: none; }
+  .flip-inner { transform-style: flat; }
+  /* Reduce 3D intensity on small screens */
+  .flip-face { box-shadow: none; }
+}
